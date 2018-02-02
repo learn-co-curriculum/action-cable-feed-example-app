@@ -14,9 +14,7 @@ class TweetForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    adapter.createTweet({ content: this.state.value }).then(tweet => {
-      this.props.addTweet(tweet);
-    });
+    adapter.createTweet({ content: this.state.value });
 
     this.setState({
       value: ''
@@ -26,18 +24,14 @@ class TweetForm extends Component {
   render() {
     return (
       <div className="ui secondary segment">
-        <form action="">
+        <form onSubmit={this.handleSubmit} action="">
           <div className="ui fluid input">
             <input
               onChange={this.onChange}
               value={this.state.value}
               type="text"
             />
-            <button
-              onClick={this.handleSubmit}
-              className="ui basic blue button"
-              type="submit"
-            >
+            <button className="ui basic blue button" type="submit">
               Add a Tweet
             </button>
           </div>

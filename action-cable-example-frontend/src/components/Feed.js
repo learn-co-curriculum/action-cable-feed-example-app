@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TweetForm from './TweetForm';
 import TweetList from './TweetList';
+import { ActionCable } from 'react-actioncable-provider';
 import adapter from '../services/adapter';
 
 class Feed extends Component {
@@ -31,9 +32,15 @@ class Feed extends Component {
 
   render() {
     const { displayedTweets, newTweets } = this.state;
-
     return (
       <div className="Feed">
+        <ActionCable
+          channel={{ channel: 'FeedChannel' }}
+          onReceived={tweet => {
+            console.log('tweet');
+            this.addTweet(tweet);
+          }}
+        />
         <TweetForm addTweet={this.addTweet} />
         <TweetList
           handleDisplayTweets={this.handleDisplayTweets}
